@@ -25,7 +25,13 @@ function filter(radio) {
 }
 
 function getDataForDatatables(){
-    var jsonData = {  
+    var jsonData = 
+    $.getJSON("https://pwnyo.github.io/sts-table/cards.json")
+    .done(function( data ) {
+        console.log(data)
+     });
+    var json2 =
+    {  
         "data"     :     [
             {"name":"Bash","class":"Ironclad","type":"Attack","rarity":"Basic","cost":"2","desc":"Deal 8 (10) damage. Apply 2 (3) Vulnerable.","udesc":""},
             {"name":"Defend","class":"Ironclad","type":"Skill","rarity":"Basic","cost":"1","desc":"Gain 5 (8) Block.","udesc":""},
@@ -399,6 +405,8 @@ function getDataForDatatables(){
             {"name":"Wound","class":"Bad","type":"Status","rarity":"Common","cost":"-","desc":"Unplayable.","udesc":""}
         ]
     };
+    console.log(jsonData);
+    console.log(json2);
     setDataToTable(jsonData);
 }
 
@@ -406,7 +414,7 @@ function setDataToTable(jsonData){
 	$('#cards').DataTable( {
         pagination: "bootstrap",
             filter: true,
-            data: jsonData.data,
+            data: jsonData,
             destroy: true,
             lengthMenu: [10,25,50,75,100],
             pageLength: 50,
