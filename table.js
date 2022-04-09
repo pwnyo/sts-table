@@ -2,11 +2,11 @@ $( document ).ready(function() {
     setDataFromUrl();
     initializeCheckboxes();
     redraw();
+    redraw2();
 });
 function initializeCheckboxes() {
     var all = $("#checkAll");
     all.change(function() {
-        console.log("test");
         $(".filter").prop("checked", this.checked);
         $(".filter").trigger("change");
     });
@@ -15,7 +15,9 @@ function initializeCheckboxes() {
     setCheck("bad");
     setCheck("other");
 
-    filter($("#red"));
+    setCheck("cardType");
+    setCheck("rarity");
+    setCheck("cost");
     
     all.prop("checked", true);
     all.trigger("change");
@@ -26,28 +28,51 @@ function setCheck(boxClass) {
     });
 }
 
-function filter(box) {
-    var r = box.prop("value");
-	console.log(r);
-
-}
 function redraw() {
     $("input:checkbox").change(function() {
-        var queries = $('input:checkbox[class="char"]:checked, input:checkbox[class="other"]:checked').map(function() {
-            console.log(this.value + ": " + this.checked);
-            return '^' + this.value + '$';
-        }).get().join('|');
-        console.log(queries);
-
-        var queries2 = $('input:checkbox[class="bad"]:checked').map(function() {
-            console.log(this.value + ": " + this.checked);
-            return '^' + this.value + '$';
-        }).get().join('|');
-    
         var table = $("#cards").DataTable();
-        table.column(1).search(queries, true).column(2).search(queries2, true);
         table.draw(false);
     });
+}
+function redraw2() {
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+        
+        var classes = $('input:checkbox[class="char"]');
+        var bads = $('input:checkbox[class="bad"]');
+        var others = $('input:checkbox[class="other"]');
+        
+        var types = $('input:checkbox[class="cardType"]');
+        var rars = $('input:checkbox[class="rarity"]');
+        var costs = $('input:checkbox[class="cost"]');
+
+        var isBad = checkClass(bads, data[2]);
+
+        return checkCost(costs, data[4]) && (isBad || (
+            checkClass(types, data[2]) &&
+            (checkClass(classes, data[1]) || checkClass(others, data[1])) &&
+            checkClass(rars, data[3])
+        ))
+    });
+}
+function checkClass(boxes, check) {
+    for (let i = 0; i < boxes.length; i++) {
+        if (boxes[i].checked && check == boxes[i].value) { 
+            return true;
+        }
+    }
+    //console.log(check);
+    return false;
+}
+function checkCost(boxes, check) {
+    if (boxes[5].checked && (check.includes("4") || check.includes("5"))) {
+        return true;
+    }
+    for (let i = 0; i < boxes.length - 1; i++) {
+        if (boxes[i].checked && check.includes(boxes[i].value)) { 
+            return true;
+        }
+    }
+    return false;
 }
 
 function setDataFromUrl() {

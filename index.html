@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slay the Spire Card Table</title>
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/r/dt/dt-1.10.22/datatables.min.js"></script>
@@ -14,18 +15,53 @@
 <body>
 	<section class="container mt-2">
 		<input type="checkbox" value="all" id="checkAll"> All
-		<input type="checkbox" value="characters" id="char" class="filter"> Characters
-		<input type="checkbox" value="bad" id="bad" class="filter"> Curse/Status
-		<input type="checkbox" value="other" id="other" class="filter"> Colorless/Special
+		<input type="checkbox" value="cardType" id="cardType" class="filter"> Any Type
+		<input type="checkbox" value="rarity" id="rarity" class="filter"> Any Rarity
+		<input type="checkbox" value="cost" id="cost" class="filter"> Any Cost
 		<br>
-		<input type="checkbox" value="Ironclad" id="red" class="char"> Ironclad
+		<input type="checkbox" value="characters" id="char" class="filter"> Characters
+		<input type="checkbox" value="other" id="other" class="filter"> Colorless/Special
+		<input type="checkbox" value="bad" id="bad" class="filter"> Curse/Status
+		<input type="checkbox" value="collectible" id="collectible" class="filter"> Collectible Only
+		<br>
+		<input type="checkbox" value="Ironclad" class="char"> Ironclad
 		<input type="checkbox" value="Silent" class="char"> Silent
 		<input type="checkbox" value="Defect" class="char"> Defect
 		<input type="checkbox" value="Watcher" class="char"> Watcher
-		<input type="checkbox" value="Curse" class="bad"> Curse
-		<input type="checkbox" value="Status" class="bad"> Status
+		<br>
 		<input type="checkbox" value="Colorless" class="other"> Colorless
 		<input type="checkbox" value="Special" class="other"> Special
+		<input type="checkbox" value="Curse" class="bad"> Curse
+		<input type="checkbox" value="Status" class="bad"> Status
+		<br>
+		<input type="checkbox" value="Attack" class="cardType"> Attack
+		<input type="checkbox" value="Skill" class="cardType"> Skill
+		<input type="checkbox" value="Power" class="cardType"> Power
+		<br>
+		<input type="checkbox" value="Basic" class="rarity"> Basic
+		<input type="checkbox" value="Common" class="rarity"> Common
+		<input type="checkbox" value="Uncommon" class="rarity"> Uncommon
+		<input type="checkbox" value="Rare" class="rarity"> Rare
+		<br>
+		<input type="checkbox" value="-" class="cost"> N/A
+		<input type="checkbox" value="X" class="cost"> X
+		<input type="checkbox" value="0" class="cost"> 0
+		<input type="checkbox" value="1" class="cost"> 1
+		<input type="checkbox" value="2" class="cost"> 2
+		<input type="checkbox" value="3" class="cost"> 3
+		<input type="checkbox" value="4" class="cost"> 4+
+		<br>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+			<label class="form-check-label" for="inlineCheckbox1">1</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option1">
+			<label class="form-check-label" for="inlineCheckbox2">2</label>
+		</div>
+		<label class="checkbox-inline">
+			<input type="checkbox" value=""> Option 1
+		</label>
 
 		<table id="cards" class="table table-striped table-bordered">
 			<thead>
