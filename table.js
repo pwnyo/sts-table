@@ -2,7 +2,7 @@ $( document ).ready(function() {
     setDataFromUrl();
     initializeCheckboxes();
     redraw();
-    redraw2();
+    setFilters();
 });
 function initializeCheckboxes() {
     var all = $("#checkAll");
@@ -10,7 +10,7 @@ function initializeCheckboxes() {
         $(".filter").prop("checked", this.checked);
         $(".filter").trigger("change");
     });
-
+    
     setCheck("char");
     setCheck("bad");
     setCheck("other");
@@ -34,7 +34,8 @@ function redraw() {
         table.draw(false);
     });
 }
-function redraw2() {
+function setFilters() {
+    $.fn.dataTable.enum( [ 'Basic', 'Common', 'Uncommon', 'Rare', 'Curse' ] );
     $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
         
         var classes = $('input:checkbox[class="char"]');
@@ -47,11 +48,11 @@ function redraw2() {
 
         var isBad = checkClass(bads, data[2]);
 
-        return checkCost(costs, data[4]) && (isBad || (
-            checkClass(types, data[2]) &&
+        return checkCost(costs, data[4]) && (isBad || 
+            (checkClass(types, data[2]) &&
             (checkClass(classes, data[1]) || checkClass(others, data[1])) &&
-            checkClass(rars, data[3])
-        ))
+            checkClass(rars, data[3]))
+        )
     });
 }
 function checkClass(boxes, check) {
@@ -64,7 +65,7 @@ function checkClass(boxes, check) {
     return false;
 }
 function checkCost(boxes, check) {
-    if (boxes[5].checked && (check.includes("4") || check.includes("5"))) {
+    if (boxes[6].checked && (check.includes("4") || check.includes("5"))) {
         return true;
     }
     for (let i = 0; i < boxes.length - 1; i++) {
